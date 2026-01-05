@@ -1,0 +1,27 @@
+.celnav-button{
+    background-color: #26AFEA  /*  #F84948 */;
+}
+
+
+.bg-body-fondo{
+    background-color:  #21252A /*  #1F252A */;
+}
+
+.nav-link, .navbar-brand, .nav-link:hover, .nav-link:focus, .nav-link.disabled {
+    color: #5B8A93;
+}
+
+.cart-item .cart img {
+    width: 30px;
+    height: 30px;
+}
+
+.acount-item  .acount img {
+    width: 30px;
+    height: 30px;
+} 
+
+.nav-link:hover, .nav-link:focus {
+    color: white;
+    text-decoration: none;
+}

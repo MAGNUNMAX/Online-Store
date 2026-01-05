@@ -1,0 +1,30 @@
+[
+  {
+    "title": "\"Quantum Pulse\" T-Shirt",
+    "description": "Stand out with a futuristic circuit design that glows in vibrant neon hues. The perfect tee for a bold, tech-inspired look.",
+    "image": "img/blackpolo.png",
+    "alt": "Black shirt"
+   
+  },
+  {
+    "title": "\"Cargo Shadow\" Pants",
+    "description": "Conquer the urban jungle with a tactical, futuristic design. Cutting-edge functionality and style, accented with bold cyan details.",
+    "image": "img/pantalon.png",
+    "alt": "Pants"
+    
+  },
+  {
+    "title": "\"Vanguard Step\" Sneakers",
+    "description": "Light up every step with a futuristic neon design. The perfect blend of comfort and bold style, built to dominate the urban landscape.",
+    "image": "img/tenis1.png",
+    "alt": "Tennis shoes"
+    
+  },
+  {
+    "title": "Nightfall Bomber Jacket",
+    "description": "Command the night with this sleek, dark blue bomber jacket. Its subtle, metallic sheen and minimal design offer a sharp, modern urban edge.",
+    "image": "img/camisa.png",
+    "alt": "camisa"
+    
+  }
+]

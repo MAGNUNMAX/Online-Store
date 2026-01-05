@@ -1,0 +1,61 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap");
+
+body {
+  font-family: "Montserrat", sans-serif;
+  background-color: #0f1722;
+}
+
+.checkout {
+  background-color: #0f1722;
+  min-height: 100vh;
+}
+
+.brand {
+  font-size: 1rem;
+  color: #00a3ff;
+  letter-spacing: 1px;
+  margin-bottom: 0.3rem;
+}
+
+.card {
+  background-color: #1b2431 !important;
+  border-radius: 12px !important;
+}
+
+.btn-outline-secondary {
+  border-color: #a3b3c2 !important;
+  color: #a3b3c2 !important;
+}
+
+.btn-outline-secondary:hover {
+  background-color: #00a3ff !important;
+  border-color: #00a3ff !important;
+  color: #fff !important;
+}
+
+.btn-danger {
+  background-color: #ff4040 !important;
+  border: none !important;
+  font-weight: 700 !important;
+  border-radius: 10px !important;
+  transition: 0.2s ease;
+}
+
+.btn-danger:hover {
+  background-color: #e63b3b !important;
+}
+
+.text-secondary {
+  color: #a3b3c2 !important;
+}
+
+img {
+  cursor: pointer;
+  opacity: 0.9;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+img:hover {
+  transform: scale(1.05);
+  opacity: 1;
+}
