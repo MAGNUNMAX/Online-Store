@@ -1,144 +1,85 @@
+import { StoreContext } from '../store/store';
+import { useNavigate } from 'react-router-dom';
+import { useContext, useState, useMemo, useEffect } from 'react';
 
-import React, { useState } from "react";
+function Categories({ products: propProducts, fallbackImg: propFallback }) {
+  const { products: ctxProducts, setUnicImageId, fallbackImg } = useContext(StoreContext);
+  const products = Array.isArray(propProducts) ? propProducts : ctxProducts;
+  const fallback = propFallback || fallbackImg;
+  const navigate = useNavigate();
 
-function Categories({ categories }) {
+  const [selectedCategory, setSelectedCategory] = useState('All'); // <-- "All" por defecto
 
-  //  Agrupar los productos por categoría
+  // Agrupar productos por categoría
+  const categoriesProducts = useMemo(() => {
+    const map = {};
+    products.forEach((product) => {
+      const category = product.category || 'Uncategorized';
+      if (!map[category]) map[category] = [];
+      map[category].push(product);
+    });
+    return map;
+  }, [products]);
 
-  const categoriesProducts = categories.reduce((acc, product) => {
-    const category = product.category;
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(product);
-    return acc;
-  }, {});
+  const categoryKeys = ['All', ...Object.keys(categoriesProducts)]; // <-- agregar "All" al inicio
 
+  function handleClick(id) {
+    setUnicImageId(id);
+    navigate(`/product/${id}`);
+  }
 
-  // Estado para guardar la categoría seleccionada
+  if (!products.length) return <p style={{ padding: 20 }}>Loading products...</p>;
 
-  const [selectedCategory, setSelectedCategory] = useState(
-    Object.keys(categoriesProducts)[0] // primera categoría por defecto
-  );
+  // Productos a mostrar según la categoría seleccionada
+  const productsToShow =
+    selectedCategory === 'All' ? products : categoriesProducts[selectedCategory] || [];
 
   return (
-    <div className="container mt-4">
-      <h1 className="text-center fs-2 mb-4 text-white">Products by Category</h1>
+    <main className="container mt-3">
+      <p className="fs-2 text-white mt-4 mb-4">Featured Products</p>
 
-      {/*  Dropdown to choose category */}
-      
-      <div className="dropdown mb-4 text-center">
-        <button className="btn btn-dark dropdown-toggle" type="button" data-bs-toggle="dropdown" >
-          {selectedCategory}
-        </button>
-        <ul className="dropdown-menu show"  aria-expanded="false">
-          {Object.keys(categoriesProducts).map((Category) => (
-            <li key={Category}>
-              <button
-                className="dropdown-item"
-                onClick={() => setSelectedCategory(Category)}
-              >
-                {Category}
-              </button>
-            </li>
+      {/* 🔽 Dropdown de categorías */}
+      <div className="mb-4">
+        <select
+          className="form-select w-auto"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          {categoryKeys.map((cat) => (
+            <option key={cat} value={cat}>
+              {cat}
+            </option>
           ))}
-        </ul>
+        </select>
       </div>
 
-      {/* 🧾 Productos de la categoría seleccionada */}
+      {/* 🧾 Productos filtrados */}
       <div className="row">
-        {categoriesProducts[selectedCategory].map((product, index) => (
-          <div key={index} className="col-12 col-md-6 col-lg-3 mb-4">
-            <div className="card bg-dark text-white rounded-0 h-100">
-              <img src={product.image} className="card-img-top h-50 w-50" alt={product.title} />
+        {productsToShow.map((product) => (
+          <div
+            key={product.id}
+            onClick={() => handleClick(product.id)}
+            className="col-12 col-md-6 col-lg-3 mb-4"
+          >
+            <div className="card bg-dark text-white rounded-0 h-100 d-flex flex-column">
+              <img
+                src={product.image_url || product.image || product.imageUrl || fallback}
+                className="card-img-top mt-3"
+                style={{ height: '180px', objectFit: 'contain' }}
+                alt={product.title || 'Product Image'}
+                onError={(e) => (e.target.src = fallback)}
+              />
+
               <div className="card-body d-flex flex-column">
                 <p className="fw-bold">{`Price: $${product.price}`}</p>
-                <h5 className="card-title">{product.title}</h5>
-          {/*       <p className="card-text">{product.description}</p> */}
-            
-                <button className="btn btn-bgcolor mt-auto">ADD TO CART</button>
+                <h5 className="card-title text-truncate">{product.description}</h5>
               </div>
             </div>
           </div>
         ))}
       </div>
-    </div>
+    </main>
   );
 }
 
 export default Categories;
-
-
-
-
-
-
-
-/* import React from 'react';
-
-
-
-
-function Categories({ categories }){
-
-const categoriesProducts = categories.reduce((acc, product) => {
-    const category = product.categoria;
-    if (!acc[category]) acc[category] = [];
-    acc[category].push(product);
-    return acc;
-}, {});
-
- return (
-    <div>
-      <h1>Productos por Categoría</h1>
-
-      {Object.keys(categoriesProducts).map((categoria) => (
-        <div key={categoria}>
-          <h2>{categoria}</h2>
-
-        <div className="dropdown">
-        <button className="dropdown-btn">Categorías</button>
-        <div className="dropdown-content">
-            <a href="#">Hombres</a>
-            <a href="#">Mujeres</a>
-            <a href="#">Niños</a>
-        </div>
-        </div>
-
-
-          <ul>
-            {categoriesProducts[categoria].map((producto) => (
-
-              <li key={producto.id}>
-                {producto.nombre} - ${producto.precio}
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
-    </div>
-  );
-}
-
-
-
-    return(
-      <>
-          <main className="row mt-3">
-           {categories.map((category, index) => (
-            <div key={index}  className="col-12 col-md-6 col-lg-3">
-            
-                <div className="card bg-dark text-white rounded-0  h-100 d-flex flex-column">
-                    <img src={category.image} className="card-img-top" alt={category.name}/>
-                <div className="card-body d-flex flex-column">
-                    <h5 className="card-title">{category.name}</h5>
-                     <p className="card-text">{category.description}</p> 
-                    <a href="#" className="btn btn-bgcolor mt-auto">ADD TO CART</a>
-                </div>
-                </div>
-            </div>
-          ))}   
-      </main>
-              
-      </>  
-    )
-
-export default Categories; */

@@ -4,9 +4,11 @@ import {StoreContext} from '../store/store';
 import { useNavigate } from 'react-router-dom';
 
 
-function Collections() {
+function Collections({ products: propProducts, fallbackImg: propFallback, onSelect }) {
 
-  const { products, setUnicImageId, fallbackImg } = useContext(StoreContext);
+  const { products: ctxProducts, setUnicImageId, fallbackImg } = useContext(StoreContext);
+  const products = Array.isArray(propProducts) ? propProducts : ctxProducts;
+  const fallback = propFallback || fallbackImg;
   const navigate = useNavigate();
 
   function handleClick(id) {
@@ -19,7 +21,7 @@ function Collections() {
     return (
       <div className="d-flex justify-content-center align-items-center my-5">
         <div className="spinner-border text-light" role="status">
-          <span className="visually-hidden">Cargando productos...</span>
+          <span className="visually-hidden">Loading products...</span>
         </div>
       </div>
     );
@@ -36,7 +38,14 @@ function Collections() {
       
                 <div className="card bg-dark text-white rounded-0  h-100 d-flex flex-column ">
 
-                    <img src={product.image_url} className="card-img-top h-50 w-50 mt-3" alt={product.title || "Product Image"} onError={(e) => (e.target.src = fallbackImg)} />
+                              {
+                                (() => {
+                                  const src = product.image_url || product.image || product.imageUrl || '';
+                                  return (
+                                    <img src={src || fallback} className="card-img-top h-50 w-50 mt-3" alt={product.title || "Product Image"} onError={(e) => (e.target.src = fallback)} />
+                                  );
+                                })()
+                              }
 
                 <div className="card-body d-flex flex-column">
                     <p className="fw-bold">{`Price: $${product.price}`}</p>

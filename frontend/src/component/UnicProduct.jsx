@@ -6,9 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 function UnicProduct() {
 
-  const { cart,setCheckoutData } = useContext(StoreContext); // update Total in Cart
-
-  const { unicImageId, image, setImage,setCart } = useContext(StoreContext);
+  const { cart, unicImageId, image, setImage, addToCart } = useContext(StoreContext);
   const Id = unicImageId?.id || unicImageId;
   const navigate = useNavigate();
 
@@ -47,10 +45,8 @@ function UnicProduct() {
         className="btn btn-success align-self-start mt-2"
         onClick={(e) => {
           e.preventDefault();
-          setCart((prevCart) => [...prevCart, image]);
+          addToCart(image);
           navigate("/cart");
-          let cartPrice = cart.map(item => item.price);
-          if(cartPrice.length===0){setCheckoutData(image.price)}else{setCheckoutData(cart.reduce((total, item) => total + item.price, 0).toFixed(2));} //Total in Cart
         }}
       >
        ADD TO CART

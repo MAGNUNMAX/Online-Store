@@ -24,15 +24,15 @@
           <Link className="nav-link fw-bold" aria-current="page" to="/Clothing">CLOTHING</Link>
         </li>
         
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link fw-bold" to="/Footwear">FOOTWEAR</Link>
-        </li>
+        </li> */}
         <li className="nav-item">
           <Link className="nav-link fw-bold" to="/Category">CATEGORY</Link>
         </li>
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link fw-bold" to="/Sale">SALE</Link>
-        </li>
+        </li> */}
 
         <li className="cart-item  p-0">
           <Link className="nav-link cart" to="/cart"><img src="icono/cart.png" alt="Cart" /></Link>

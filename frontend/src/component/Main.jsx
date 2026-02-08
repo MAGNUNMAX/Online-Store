@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import Collections from "./Collections"; 
+/* import Collections from "./Collections";  */
 import UnicProduct from './UnicProduct';
 import '../CSS/Main.css';
 
@@ -16,7 +16,7 @@ function Main({products}){
     return(
         <>
 
-          <p className="fs-2 text-white mt-5 mb-4">Featured: The Nocturnal Collection</p>
+          <p className="fs-2 text-white mt-5 mb-4">Featured The Nocturnal Collection</p>
         <main className="row mt-3">
           
            {unicProduct && (

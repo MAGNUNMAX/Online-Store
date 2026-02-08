@@ -11,21 +11,23 @@ export const syncProducts = async () => {
 
     for (const product of first20) {
       await pool.query(
-        `INSERT INTO products (id_product, name, description, price, stock, image_url)
-         VALUES ($1,$2,$3,$4,$5,$6)
+        `INSERT INTO products (id_product, name, description, price, stock, image_url,category)
+         VALUES ($1,$2,$3,$4,$5,$6,$7)
          ON CONFLICT (id_product)
          DO UPDATE SET 
            name = EXCLUDED.name, 
            description = EXCLUDED.description, 
            price = EXCLUDED.price, 
-           image_url = EXCLUDED.image_url`,
+           image_url = EXCLUDED.image_url,
+           category = EXCLUDED.category`,
         [
           product.id,
           product.title,
           product.description,
           product.price,
           product.stock || 0,
-          product.image || null
+          product.image || null,
+          product.category || null
         ]
       );
     }

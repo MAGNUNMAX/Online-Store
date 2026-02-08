@@ -14,8 +14,9 @@ import UnicProduct from './component/UnicProduct';
 import Cart from './component/Cart';
 import Checkout from './component/Checkout';
 import  LoginForm  from './component/Login';
-import ComponentCART from './component/ComponentCART';
 import PrivateRoute from './component/PrivateRoute';
+import Success from './component/Success';
+import Cancel from './component/Cancel';
 
 import './App.css';
 
@@ -26,10 +27,11 @@ function App() {
     <Router>
       <div className="container">
 
+
         {/* Solo si está logueado */}
         {isAuth && <Header />}
         {isAuth && <Banner />}
-        {isAuth && <ComponentCART />}
+       
 
         <Routes>
           {/* Login */}
@@ -52,6 +54,8 @@ function App() {
           <Route path="/product/:id" element={<PrivateRoute><UnicProduct /></PrivateRoute>} />
           <Route path="/cart" element={<PrivateRoute><Cart /></PrivateRoute>} />
           <Route path="/checkout" element={<PrivateRoute><Checkout /></PrivateRoute>} />
+          <Route path="/success" element={<Success />} />
+          <Route path="/cancel" element={<Cancel />} />
         </Routes>
 
         {isAuth && <Footer />}
