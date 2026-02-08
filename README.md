@@ -1,5 +1,7 @@
 # 🛒 Online Store – Full Stack E-commerce
 
+Project still under construction
+
 A modern full-stack e-commerce application designed to provide a complete online shopping experience.  
 This project is built with a clear separation between frontend and backend, following scalable and maintainable development practices.
 

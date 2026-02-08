@@ -83,3 +83,11 @@ function Categories({ products: propProducts, fallbackImg: propFallback }) {
 }
 
 export default Categories;
+
+
+
+
+
+
+
+
