@@ -14,9 +14,9 @@ dotenv.config();
 
 
 const app = express();
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(cors());   //{ origin: process.env.FRONTEND_URL||'http://localhost:5173' }
 app.use(express.json());
-app.use(express.static('dist'));
+
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_TEST); //payment
 
 
@@ -77,6 +77,10 @@ app.get('/api/products/:id',(req,res)=>{
   .then(data => res.json(data))
   .catch(err =>res.status(500).json({error: err.message}));
 });
+
+
+
+app.use(express.static('dist'));
 
 //Payment Metod
 app.post("/create-payment-intent", async (req, res) => {
