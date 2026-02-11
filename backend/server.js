@@ -16,7 +16,7 @@ dotenv.config();
 const app = express();
 app.use(cors({ origin:process.env.FRONTEND_URL||'http://localhost:5173' }));   
 app.use(express.json());
-app.use(express.static('dist'));
+/* app.use(express.static('dist')); */
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_TEST); //payment
 
 
