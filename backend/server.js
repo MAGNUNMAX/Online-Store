@@ -1,4 +1,5 @@
 import pool from './database/db.js';
+import { initDB } from './database/initDB.js';
 import express from 'express';
 import fetch from 'node-fetch';
 import cors from 'cors';
@@ -10,12 +11,13 @@ import {addCartProduct, allProducts,deleteProduct } from './router/router.js';
 
 
 dotenv.config();
+initDB();
 
 
 
 const app = express();
 app.use(cors({ origin:process.env.FRONTEND_URL||'http://localhost:5173' }));   
-app.use(express.json());
+app.use(express.json()); 
 /* app.use(express.static('dist')); */
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY_TEST); //payment
 
