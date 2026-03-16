@@ -147,6 +147,35 @@ app.post('/create-checkout-session', async (req, res) => {
   }
 });
 
+// Serve frontend static files
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const possibleFrontDirs = [
+  path.join(__dirname, '..', 'frontend', 'dist'),
+  path.join(__dirname, '..', 'frontend', 'build')
+];
+let staticDir = null;
+for (const d of possibleFrontDirs) {
+  if (fs.existsSync(d)) {
+    staticDir = d;
+    break;
+  }
+}
+
+if (staticDir) {
+  app.use(express.static(staticDir));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(staticDir, 'index.html'));
+  });
+  console.log('Serving frontend static from', staticDir);
+} else {
+  console.log('Frontend build not found. API will run but static files are not served.');
+}
 
 
 // Puerto

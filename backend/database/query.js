@@ -1,15 +1,23 @@
 import pool from '../database/db.js';
 import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 //syncronizing api data save from api
 
 export const syncProducts = async () => {
   try {
-    const response = await fetch(process.env.API_URL);
-    const data = await response.json();
+    // Read from local product.json instead of fetching
+    const productJsonPath = path.join(__dirname, '..', '..', 'frontend', 'public', 'product.json');
+    const data = JSON.parse(fs.readFileSync(productJsonPath, 'utf8'));
     const first20 = data.slice(0, 20);
 
-    for (const product of first20) {
+    for (let i = 0; i < first20.length; i++) {
+      const product = first20[i];
       await pool.query(
         `INSERT INTO products (id_product, name, description, price, stock, image_url,category)
          VALUES ($1,$2,$3,$4,$5,$6,$7)
@@ -21,13 +29,13 @@ export const syncProducts = async () => {
            image_url = EXCLUDED.image_url,
            category = EXCLUDED.category`,
         [
-          product.id,
+          i + 1, // use index +1 as id
           product.title,
           product.description,
-          product.price,
-          product.stock || 0,
+          29.99, // default price
+          10, // default stock
           product.image || null,
-          product.category || null
+          'clothing' // default category
         ]
       );
     }
